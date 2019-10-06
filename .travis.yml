@@ -1,5 +1,11 @@
 language: java
 
+addons:
+  sonarcloud:
+    organization: "imousmoutis"
+    token:
+      secure: "e5iAGPWPAXhYOtNtTn6/aDEI1OBnauz5ws9wC03KjLd54phv4Cs6ulCpZGNVtLvBF7MQWhm0n/PNvq2bDls/GbjXiCDrKzs5ftkcGmoBGrBwo+F+XuLoqzsXxq6eqvZaXYoVxAkmRCNur29xWSQo2dwlR2QCCSCiA1JdmpfF3CM14S5BL/HHtfmX3JN7JSiaqh0fqWSvPzYZSAF0AQKOxz8oWRvAVkY1QsOm/THkvr2es6onEFbChnGQQR3m3MK/jZ0iaxIQYTy4LzM8VJ3JEmLE+eLaoN2Z6EIQOJdBZ7P9vZtSXCGyaDezJxPCVDe4v5FmsqYNYaF9hZZdGuXm5OLf4Ka2tvw+WnDgDx9OMFSnmm+Yhe9i8zZELfVOqpEp8iXEwzlZZe7DnLVGrBTL1DSl2G8ooeOO4eB52dKwqdMTaD1gDe01oJOO28jAyCLhjgWq2RX9Xo7CTGOnzgPflL9YVeUr6rWdZeEhI9V9oCXcFkRrZ7+2iylEYGOtcrnHNj4qj7bM6oZoCU44ntLxwgqt4A6v9zynMICK93veFilsvYDL/XODenWVt2N6GGpw+8LY7LGe0nNej5PsyZNyoQ8Cg+7LB4LdGor/3/1DIUpOmMcDCofT0R13PEU77Sd+rDoggUAVEzHkZiSHS0Bxy1osHaiVIUXkyGOtwXH9JiQ="
+
 jdk: openjdk8
 
-script: mvn clean install -Pcoverage
+script: mvn clean install -Pcoverage sonar:sonar
