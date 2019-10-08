@@ -1,5 +1,6 @@
 package gr.ioannis.cicd.service;
 
+import gr.ioannis.cicd.model.Holiday;
 import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import gr.ioannis.cicd.model.Holiday;
 
 @Service
 public class HolidayService {
@@ -25,11 +25,22 @@ public class HolidayService {
 
   public List<Holiday> getHolidaysForCountry(String countryName) {
     ResponseEntity<List<Holiday>> holidays = restTemplate.exchange(
-      HOLIDAYS_API + year + "/" + countryName,
-      HttpMethod.GET,
-      null,
-      new ParameterizedTypeReference<List<Holiday>>() {
-      });
+        HOLIDAYS_API + year + "/" + countryName,
+        HttpMethod.GET,
+        null,
+        new ParameterizedTypeReference<List<Holiday>>() {
+        });
+
+    return holidays.getBody();
+  }
+
+  public List<Holiday> getHolidaysForCountryAndYear(String countryName, String year) {
+    ResponseEntity<List<Holiday>> holidays = restTemplate.exchange(
+        HOLIDAYS_API + year + "/" + countryName,
+        HttpMethod.GET,
+        null,
+        new ParameterizedTypeReference<List<Holiday>>() {
+        });
 
     return holidays.getBody();
   }

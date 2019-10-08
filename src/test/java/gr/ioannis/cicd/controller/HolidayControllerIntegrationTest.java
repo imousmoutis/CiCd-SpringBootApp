@@ -32,10 +32,19 @@ public class HolidayControllerIntegrationTest {
   @Test
   public void getCurrentHolidaysForCountryTest() throws Exception {
     mockMvc.perform(get("/holidays/GR").contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[0].name", is("New Year's Day")))
-      .andExpect(jsonPath("$[1].name", is("Epiphany")))
-      .andExpect(jsonPath("$[2].name", is("Clean Monday")));
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].name", is("New Year's Day")))
+        .andExpect(jsonPath("$[1].name", is("Epiphany")))
+        .andExpect(jsonPath("$[2].name", is("Clean Monday")));
+  }
+
+  @Test
+  public void getCurrentHolidaysForCountryAndYearTest() throws Exception {
+    mockMvc.perform(get("/holidays/GR/2019").contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].name", is("New Year's Day")))
+        .andExpect(jsonPath("$[1].name", is("Epiphany")))
+        .andExpect(jsonPath("$[2].name", is("Clean Monday")));
   }
 
 }
