@@ -23,4 +23,10 @@ public class HolidayServiceIntegrationTest {
     assertThat(holidays).isNotNull().isNotEmpty();
   }
 
+  @Test
+  public void getHolidaysForCountryAndYearTest() {
+    List<Holiday> holidays = holidayService.getHolidaysForCountryAndYear("GR", "2019");
+    assertThat(holidays).isNotNull().isNotEmpty();
+  }
+
 }

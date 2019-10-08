@@ -44,21 +44,35 @@ public class HolidayControllerUnitTest {
     mockMvc = standaloneSetup(this.holidayController).build();
     objectMapper = new ObjectMapper();
     objectMapper
-      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
   @Test
   public void getCurrentHolidaysForCountryTest() throws Exception {
     List<Holiday> mockedHolidays = Arrays
-      .asList(objectMapper.readValue(mockedJson, Holiday[].class));
+        .asList(objectMapper.readValue(mockedJson, Holiday[].class));
 
     when(holidayService.getHolidaysForCountry("GR")).thenReturn(mockedHolidays);
 
     mockMvc.perform(get("/holidays/GR").contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[0].name", is("New Year's Day")))
-      .andExpect(jsonPath("$[1].name", is("Epiphany")))
-      .andExpect(jsonPath("$[2].name", is("Clean Monday")));
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].name", is("New Year's Day")))
+        .andExpect(jsonPath("$[1].name", is("Epiphany")))
+        .andExpect(jsonPath("$[2].name", is("Clean Monday")));
+  }
+
+  @Test
+  public void getCurrentHolidaysForCountryAndYearTest() throws Exception {
+    List<Holiday> mockedHolidays = Arrays
+        .asList(objectMapper.readValue(mockedJson, Holiday[].class));
+
+    when(holidayService.getHolidaysForCountryAndYear("GR", "2019")).thenReturn(mockedHolidays);
+
+    mockMvc.perform(get("/holidays/GR/2019").contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].name", is("New Year's Day")))
+        .andExpect(jsonPath("$[1].name", is("Epiphany")))
+        .andExpect(jsonPath("$[2].name", is("Clean Monday")));
   }
 
 }

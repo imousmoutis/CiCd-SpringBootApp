@@ -43,25 +43,43 @@ public class HolidayServiceUnitTest {
   @Before
   public void init() {
     year = String
-      .valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        .valueOf(Calendar.getInstance().get(Calendar.YEAR));
     objectMapper = new ObjectMapper();
     objectMapper
-      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
   @Test
   public void getHolidaysForCountryTest() throws IOException {
 
     List<Holiday> mockedHolidays = Arrays
-      .asList(objectMapper.readValue(mockedJson, Holiday[].class));
+        .asList(objectMapper.readValue(mockedJson, Holiday[].class));
 
     when(restTemplate
-      .exchange(HOLIDAYS_API + year + "/GR", HttpMethod.GET, null,
-        new ParameterizedTypeReference<List<Holiday>>() {
-        })).thenReturn(mockedRestEntity);
+        .exchange(HOLIDAYS_API + year + "/GR", HttpMethod.GET, null,
+            new ParameterizedTypeReference<List<Holiday>>() {
+            })).thenReturn(mockedRestEntity);
     when(mockedRestEntity.getBody()).thenReturn(mockedHolidays);
 
     List<Holiday> holidays = holidayService.getHolidaysForCountry("GR");
+    assertThat(holidays).isNotNull().isNotEmpty();
+  }
+
+  @Test
+  public void getHolidaysForCountryAndYearTest() throws IOException {
+
+    String year = "2019";
+
+    List<Holiday> mockedHolidays = Arrays
+        .asList(objectMapper.readValue(mockedJson, Holiday[].class));
+
+    when(restTemplate
+        .exchange(HOLIDAYS_API + year + "/GR", HttpMethod.GET, null,
+            new ParameterizedTypeReference<List<Holiday>>() {
+            })).thenReturn(mockedRestEntity);
+    when(mockedRestEntity.getBody()).thenReturn(mockedHolidays);
+
+    List<Holiday> holidays = holidayService.getHolidaysForCountryAndYear("GR", year);
     assertThat(holidays).isNotNull().isNotEmpty();
   }
 
